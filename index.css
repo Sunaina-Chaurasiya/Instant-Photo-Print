@@ -230,3 +230,26 @@ body {
 .logo-text{
   margin-top: 10px;
 }
+
+@media (min-width: 768px) {
+  .container .wrapper {
+    flex-direction: row;
+    padding-right: 160px;
+    gap: 150px;
+  }
+
+  .preview-img {
+    margin: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .controls {
+    flex-direction: column;
+  }
+
+  .editor-panel, .preview-img {
+    width: 100%;
+    max-width: none;
+  }
+}
