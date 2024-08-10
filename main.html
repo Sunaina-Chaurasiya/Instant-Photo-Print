@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <title>Image Editor</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+</head>
+<body>
+    <div class="container disable">
+        <div class="logo">
+            <img src="images/image (4).jpg"/>
+            <h2 class="logo-text">Instant Photo Print</h2>
+        </div>
+        <div class="wrapper">
+            <div class="editor-panel">
+                <div class="filter">
+                    <label class="title">Filters</label>
+                    <div class="options">
+                        <button id="brightness" class="active">Brightness</button>
+                        <button id="saturation">Saturation</button>
+                        <button id="contrast">Contrast</button>
+                        <button id="grayscale">Grayscale</button>
+                        <button id="blur">Blur</button>
+                        <button id="invert">Inversion</button>
+                    </div>
+                    <div class="slider">
+                        <div class="filter-info">
+                            <p class="name">Brightness</p>
+                            <p class="value">100%</p>
+                        </div>
+                        <input type="range" value="100" min="0" max="200">
+                    </div>
+                </div>
+                <div class="rotate">
+                    <label class="title">Rotate & Flip</label>
+                    <div class="options">
+                        <button id="left"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button id="right"><i class="fa-solid fa-rotate-right"></i></button>
+                        <button id="horizontal"><i class="bx bx-reflect-vertical"></i></button>
+                        <button id="vertical"><i class="bx bx-reflect-horizontal"></i></button>
+                    </div>
+                </div>
+                <div class="additional-options">
+                    <label class="title">Additional options</label>
+                    <div class="options">
+                        <button id="crop"><i class="fas fa-crop-alt"></i>Crop</button>
+                        <button id="add-text"><i class="fa fa-font"></i>Text</button>
+                        <button id="print-layout"><i class="fa fa-print"></i>Print</button>
+                        <button id="remove-background"><i class="fa-solid fa-eraser"></i>Remove Background</button>
+                        <div class="color-slider-container">
+                            <input type="color" id="color-picker" value="#ff0000">
+                            <button id="apply-background-btn"><i class="fa-solid fa-paint-brush"></i>Generate Background</button>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="preview-img">
+                <img src="images/placeholder.png" alt="preview-img">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+        <div id="print-copies-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="print-copies-container">
+                    <label for="copies-input">How many copies of the photo do you want to print?</label>
+                    <input id="copies-input" type="number" min="1" placeholder="Enter number of copies">
+                    <button id="print-copies-btn">Print Copies</button>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="reset-filter">Reset Filters</button>
+            <div class="row">
+                <input type="file" class="file-input" accept="image/*">
+                <button class="choose-img">Choose Image</button>
+                <button class="download-img">Download image</button>
+                <div class="loader-container">
+                    <div class="loader"></div>
+                </div>
+            </div>
+       </div>
+    <div id="crop-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="crop-container">
+                <img id="image-to-crop" src="" alt="Image to crop">
+            </div>
+            <div class="aspect-ratio-buttons">
+                <button class="aspect-ratio-button" data-ratio="16:9">16:9</button>
+                <button class="aspect-ratio-button" data-ratio="4:3">4:3</button>
+                <button class="aspect-ratio-button" data-ratio="3:4">PassPort Size</button>
+                <button class="aspect-ratio-button" data-ratio="2:3">2:3</button>
+                <button class="aspect-ratio-button" data-ratio="free">Free</button>
+            </div>
+            <button id="crop-btn">Crop</button>
+        </div>
+    </div>
+    <div id="text-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="text-container">
+                <p>Enter Name</p>
+                <input id="text-input" type="text" placeholder="Enter Name">
+                <p>Enter Date</p>
+                <input id="date-input" type="date" placeholder="Enter Date">
+                <p>Enter Font Size</p>
+                <input id="font-size-input" type="number" value="20" min="10" max="100" placeholder="Font Size (px)">
+                <button id="add-text-btn">Add Text</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
