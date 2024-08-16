@@ -243,110 +243,16 @@ section{
   color:#e1dad8;
 }
 
-@media (min-width: 768px) {
-  .container .wrapper {
-    flex-direction: row;
-    padding-right: 160px;
-    gap: 150px;
-  }
-
-  .preview-img {
-    margin: 0;
-  }
-}
-
-@media (max-width: 767px) {
-  .container .wrapper {
-    flex-direction: column;
-    gap: 20px;
-    padding-right: 0;
-  }
-
-  .preview-img {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .controls {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .editor-panel,
-  .preview-img,
-  .controls {
-    width: 100%;
-    max-width: none;
-  }
-}
-
 @media (max-width: 600px) {
-  .nav-items {
-    flex-direction: column;
-    gap: 10px;
-  }
-
+ 
   .logo-text {
-    font-size: 24px;
+    font-size: 22px;
   }
-
-  .editor-panel .title,
-  .sidebar .title {
-    font-size: 14px;
+  
+  .container h1{
+    font-size: 90px;
   }
-
-  .editor-panel button,
-  .sidebar button {
-    font-size: 12px;
-    padding: 0 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 15px;
-  }
-
-  .editor-panel {
-    padding: 10px 15px;
-  }
-
-  .controls button, .controls input {
-    font-size: 12px;
-    padding: 0 10px;
-  }
-
-  .preview-img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .aspect-ratio-button {
-    font-size: 12px;
-    padding: 3px 8px;
-  }
-
-  h1 {
-    font-size: 5rem;
-  }
-
-  .secHeading {
-    font-size: 3rem;
-  }
-
-  .text {
-    font-size: 1.2rem;
-    padding: 0 5rem;
-  }
-
-  .desc {
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .container2 h1 {
-    font-size: 100px;
-  }
+  
 }
 
 .btnn {
