@@ -25,17 +25,19 @@ const fileInput = document.querySelector(".file-input"),
     printCopiesModal = document.getElementById("print-copies-modal"),
     printCopiesModalClose = printCopiesModal.querySelector(".close"),
     copiesInput = document.getElementById("copies-input"),
-    printCopiesButton = document.getElementById("print-copies-btn");
+    printCopiesButton = document.getElementById("print-copies-btn"),
+    passportResizeBtn = document.getElementById("passport-resize");
 
 let brightness = 100, saturation = 100, contrast = 100, grayscale = 0, blur = 0, invert = 0;
 let rotate = 0, flipHorizontal = 1, flipVertical = 1;
 let cropper = null;
-let originalImageSrc = ""; 
+let originalImageSrc = "";
+let isPassportSize = false; // Flag to track if the image is resized to passport size
 
 const applyFilter = () => {
     previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
     previewImg.style.filter = `brightness(${brightness}%) saturate(${saturation}%) contrast(${contrast}%) grayscale(${grayscale}%) blur(${blur}px) invert(${invert}%)`;
-}
+};
 
 const loadImage = () => {
     let file = fileInput.files[0];
@@ -45,7 +47,7 @@ const loadImage = () => {
     previewImg.addEventListener("load", () => {
         document.querySelector(".container").classList.remove("disable");
     });
-}
+};
 
 filterOptions.forEach(option => {
     option.addEventListener("click", () => {
@@ -80,11 +82,13 @@ filterOptions.forEach(option => {
         }
     });
 });
+
 filterSlider.addEventListener("input", () => {
     setTimeout(() => {
         updateFilter();
     }, 500); 
 });
+
 const updateFilter = () => {
     const selectedFilter = document.querySelector(".filter .active");
     
@@ -105,7 +109,7 @@ const updateFilter = () => {
     }
 
     applyFilter();
-}
+};
 
 rotateOptions.forEach(option => {
     option.addEventListener("click", () => {
@@ -122,13 +126,16 @@ rotateOptions.forEach(option => {
     });
 });
 
-const resetFilter = () => { setTimeout(() => {
-    brightness = 100; saturation = 100; contrast = 100; grayscale = 0; blur = 0; invert = 0;
-    rotate = 0; flipHorizontal = 1; flipVertical = 1;
-    previewImg.src = originalImageSrc;
-    filterOptions[0].click();
-    applyFilter(); }, 500);
-}
+const resetFilter = () => { 
+    setTimeout(() => {
+        brightness = 100; saturation = 100; contrast = 100; grayscale = 0; blur = 0; invert = 0;
+        rotate = 0; flipHorizontal = 1; flipVertical = 1;
+        previewImg.src = originalImageSrc;
+        filterOptions[0].click();
+        applyFilter(); 
+        isPassportSize = false; // Reset passport size flag
+    }, 500);
+};
 
 const loaderContainer = document.querySelector(".loader-container");
 
@@ -176,14 +183,14 @@ downloadImgBtn.addEventListener("click", saveImage);
 chooseImgBtn.addEventListener("click", () => fileInput.click());
 
 cropBtn.addEventListener("click", () => {
-    setTimeout(()=>{
+    setTimeout(() => {
         cropModal.style.display = "block";
         imageToCrop.src = previewImg.src;
         cropper = new Cropper(imageToCrop, {
             aspectRatio: NaN, 
             viewMode: 1,
-        })
-    },500);
+        });
+    }, 500);
 });
 
 cropModalClose.addEventListener("click", () => {
@@ -239,7 +246,6 @@ addTextModalBtn.addEventListener("click", () => {
         const fontSize = parseInt(document.getElementById("font-size-input").value, 10); 
         const fontSizePx = `${fontSize}px`;
 
-        // Format the date
         const formattedDate = formatDate(dateInput);
 
         const canvas = document.createElement("canvas");
@@ -378,7 +384,19 @@ const printImageCopies = (copies) => {
     
     printWindow.document.open();
     printWindow.document.write('<html><head><title>Print Copies</title>');
-    printWindow.document.write('<style>img {margin-right: 5px; margin-bottom: 5px; }</style>'); 
+
+    const imgStyle = isPassportSize 
+        ? 'width: 1.25in; height: 1.5in; margin-right: 5px; margin-bottom: 5px;' 
+        : 'margin-right: 5px; margin-bottom: 5px;';
+    
+    printWindow.document.write(`
+        <style>
+            @page { margin: 0; }
+            body { margin: 10px; } 
+            img { ${imgStyle} }
+        </style>
+    `);
+
     printWindow.document.write('</head><body>'); 
 
     for (let i = 0; i < copies; i++) {
@@ -390,7 +408,6 @@ const printImageCopies = (copies) => {
     printWindow.focus(); 
     printWindow.print(); 
 };
-
 
 const generateBgBtn = document.getElementById("generate-background");
 
